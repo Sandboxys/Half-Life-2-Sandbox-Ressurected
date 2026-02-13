@@ -1,0 +1,140 @@
+"GameInfo"
+{
+	game	"Half-Life 2 Sandbox: Ressurected"
+	icon	"icon_hl2"
+	title	""
+	title2	""
+	nomodels 0
+	nohimodel 1
+   gamelogo 1
+	nocrosshair 1
+	hidden_maps
+{
+	"d1_trainstation_01"	1
+	"d1_trainstation_02"	1
+	"d1_trainstation_03"	1
+	"d1_trainstation_04"	1
+	"d1_trainstation_05"	1
+	"d1_trainstation_06"	1
+	"d1_canals_01"		1
+	"d1_canals_01a"		1
+	"d1_canals_02"		1
+	"d1_canals_03"		1
+	"d1_canals_05"		1
+	"d1_canals_06"		1
+	"d1_canals_07"		1
+	"d1_canals_08"		1
+	"d1_canals_09"		1
+	"d1_canals_10"		1
+	"d1_canals_11"		1
+	"d1_canals_12"		1
+	"d1_canals_13"		1
+	"d1_eli_01"		1
+	"d1_town_01"		1
+	"d1_town_01a"		1
+	"d1_town_02"		1
+	"d1_town_03"		1
+	"d1_town_04"		1
+	"d1_town_05"		1 
+	"d2_coast_01"		1
+	"d2_coast_03"		1
+	"d2_coast_04"		1
+	"d2_coast_05"		1
+	"d2_coast_07"		1
+	"d2_coast_08"		1
+	"d2_coast_09"		1
+	"d2_coast_10"		1
+	"d2_coast_11"		1
+	"d2_coast_12"		1
+	"d2_prison_01"		1
+	"d2_prison_02"		1
+	"d2_prison_03"		1
+	"d2_prison_04"		1
+	"d2_prison_05"		1
+	"d2_prison_06"		1
+	"d2_prison_07"		1
+	"d2_prison_08"		1
+	"d3_c17_01"		1
+	"d3_c17_02"		1
+	"d3_c17_03"		1
+	"d3_c17_04"		1
+	"d3_c17_05"		1
+	"d3_c17_06a"		1
+	"d3_c17_06b"		1
+	"d3_c17_07"		1
+	"d3_c17_08"		1
+	"d3_c17_09"		1
+	"d3_c17_10a"		1
+	"d3_c17_10b"		1
+	"d3_c17_11"		1
+	"d3_c17_12"		1
+	"d3_citadel_01"		1
+	"d3_citadel_02"		1
+	"d3_citadel_03"		1
+	"d3_citadel_04"		1
+	"d3_citadel_05"		1
+	"d3_citadel_06"		1
+	"d3_citadel_07"		1
+	"d3_citadel_08"		1
+	"d3_breen_01"		1
+	"test_hardware"		1
+	"test_speakers"		1
+	"background01"		1
+	"background02"		1
+	"background03"		1
+	"background04"		1
+	"background05"		1
+	"background06"		1
+	"background07"		1
+	"d1_eli_01"		1
+	"d1_eli_02"		1
+	"d3_c17_02_camera"		1
+	"intro"		1
+	"credits"		1
+}
+	developer "YourLocalCappy"
+
+FileSystem
+	{
+		SteamAppId				320
+
+		SearchPaths
+		{
+
+			game+mod			hl2sbr/addons/*
+			game+mod			hl2sbr/extras/*
+
+			game+mod 			|gameinfo_path|.
+			
+			game				|all_source_engine_paths|hl2/hl2_textures.vpk
+			game				|all_source_engine_paths|hl2sbr/cfg/*
+			game				|all_source_engine_paths|hl2/hl2_sound_vo_english.vpk
+			game				|all_source_engine_paths|hl2/hl2_sound_misc.vpk
+			game				|all_source_engine_paths|hl2/hl2_misc.vpk
+			game 				|all_source_engine_paths|hl2/hl2_pak.vpk
+			game				|all_source_engine_paths|hl2mp/hl2mp_english.vpk
+			game 				|all_source_engine_paths|hl2mp/hl2mp_pak.vpk
+			platform			|all_source_engine_paths|platform/platform_misc.vpk
+
+			game			|all_source_engine_paths|hl2_complete/hl2_complete_textures.vpk
+			game			|all_source_engine_paths|hl2_complete/hl2_complete_sound_vo_english.vpk
+			game			|all_source_engine_paths|hl2_complete/hl2_complete_sound_misc.vpk
+			game			|all_source_engine_paths|hl2_complete/hl2_complete_misc.vpk
+
+			mod+mod_write+default_write_path		|gameinfo_path|.
+
+			game+game_write		hl2sbr
+
+			gamebin				hl2sbr/bin
+
+			game				|all_source_engine_paths|hl2
+			game 				|all_source_engine_paths|hl2mp
+			game 				|all_source_engine_paths|hl2sbr
+			game 				|all_source_engine_paths|hl2_complete
+			platform			|all_source_engine_paths|platform
+			
+			game+download	hl2sbr/download
+			game 	cstrike/download
+		}
+	}
+}
