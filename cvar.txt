@@ -1,0 +1,16 @@
+--- Copyright © 2026, YourLocalCappy, all rights deserved ---
+
+[245.9936] cvar.GetCommandLineValue = function: 0x73f48c2640 (function)[245.9938] 
+[245.9939] cvar._PACKAGE =  (string)[245.9940] 
+[245.9941] cvar.RemoveChangeCallback = function: 0x73f48f4510 (function)[245.9943] 
+[245.9944] cvar.CallGlobalChangeCallbacks = function: 0x73f49045c0 (function)[245.9946] 
+[245.9948] cvar.AddChangeCallback = function: 0x73f48f4360 (function)[245.9949] 
+[245.9950] cvar.ConsoleColorPrintf = function: 0x73f48c24f0 (function)[245.9951] 
+[245.9952] cvar.RevertFlaggedConVars = function: 0x73f48c26a0 (function)[245.9953] 
+[245.9954] cvar.ConsoleDPrintf = function: 0x73f48c2550 (function)[245.9955] 
+[245.9956] cvar._NAME = cvar (string)[245.9957] 
+[245.9958] cvar.ConsolePrintf = function: 0x73f48c25b0 (function)[245.9959] 
+[245.9960] cvar.GetChangeCallbacks = function: 0x73f48f44e0 (function)[245.9961] 
+[245.9962] cvar.FindVar = function: 0x73f48c2610 (function)[245.9963] 
+[245.9965] cvar.AllocateDLLIdentifier = function: 0x73f48c2490 (function)[245.9966] 
+[245.9967] cvar._M (table)[245.9968] 

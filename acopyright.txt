@@ -1,0 +1,6 @@
+--- Copyright © 2026, YourLocalCappy, all rights deserved ---
+
+--[[
+
+This copyright refers to the mod in general
+]]

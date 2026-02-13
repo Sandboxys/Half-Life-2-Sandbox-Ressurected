@@ -1,0 +1,578 @@
+--- Copyright © 2026, YourLocalCappy, all rights deserved ---
+
+Lua 5.1 – Complete Tutorial for beginners
+
+This tutorial covers everything in Lua 5.1, from basic syntax to advanced topics.
+
+
+---
+
+What is Lua?
+
+Lua is a lightweight, embeddable scripting language designed to be simple, fast, and flexible.
+Lua 5.1 is widely used in games, mods (like HL2SBR and HL2SB++), engines, and embedded systems.
+
+Key features:
+
+Dynamically typed
+
+Garbage collected
+
+Prototype-based (tables)
+
+Procedural + functional + data-driven
+
+
+
+---
+
+Basic Syntax
+
+Hello World
+
+-- This prints text to the console
+print("Hello, World!")
+
+Comments
+
+-- Single-line comment
+
+--[[
+Multi-line comment
+This can span multiple lines
+]]
+
+
+---
+
+Variables and Types
+
+Lua has dynamic typing.
+
+-- Variable assignment
+x = 10
+name = "Lua"
+isAlive = true
+nothing = nil
+
+Basic Types
+
+nil
+
+boolean
+
+number
+
+string
+
+table
+
+function
+
+userdata
+
+thread
+
+
+print(type(10))        -- number
+print(type("hi"))     -- string
+print(type(true))     -- boolean
+
+
+---
+
+Numbers
+
+Lua 5.1 uses double-precision floating point numbers.
+
+-- Arithmetic operations
+print(10 + 5)
+print(10 - 5)
+print(10 * 5)
+print(10 / 5)
+print(10 ^ 2) -- Power
+print(10 % 3) -- Modulo
+
+
+---
+
+Strings
+
+-- String declaration
+s1 = "Hello"
+s2 = 'World'
+
+-- Concatenation
+print(s1 .. " " .. s2)
+
+-- Length
+print(#s1)
+
+Escape Sequences
+
+print("Line1\nLine2")
+print("Tab\tSeparated")
+
+
+---
+
+Tables (Core of Lua)
+
+Tables are arrays, dictionaries, objects, and structs.
+
+-- Creating a table
+player = {}
+
+-- Assigning values
+player.name = "Gordon"
+player.health = 100
+
+Array-like Tables
+
+numbers = {1, 2, 3, 4}
+
+print(numbers[1]) -- Lua starts at index 1
+
+Dictionary Tables
+
+config = {
+  width = 800,
+  height = 600,
+  fullscreen = false
+}
+
+Nested Tables
+
+entity = {
+  position = { x = 10, y = 20 },
+  velocity = { x = 1, y = 0 }
+}
+
+
+---
+
+Table Indexing Details
+
+-- Dot syntax
+print(player.name)
+
+-- Bracket syntax (required for dynamic keys)
+key = "health"
+print(player[key])
+
+-- Numeric and string keys can coexist
+t = {
+  [1] = "array",
+  ["1"] = "string key"
+}
+
+
+---
+
+Control Flow
+
+if / elseif / else
+
+if health > 0 then
+  print("Alive")
+elseif health == 0 then
+  print("Critical")
+else
+  print("Dead")
+end
+
+while Loop
+
+i = 1
+while i <= 5 do
+  print(i)
+  i = i + 1
+end
+
+repeat until
+
+i = 1
+repeat
+  print(i)
+  i = i + 1
+until i > 5
+
+for Loop (Numeric)
+
+for i = 1, 10 do
+  print(i)
+end
+
+-- With step
+for i = 10, 1, -1 do
+  print(i)
+end
+
+-- Loop variable is local
+for i = 1, 3 do end
+print(i) -- nil
+
+
+---
+
+Functions
+
+-- Function definition
+function add(a, b)
+  return a + b
+end
+
+print(add(5, 3))
+
+Anonymous Functions
+
+multiply = function(a, b)
+  return a * b
+end
+
+Multiple Return Values
+
+function getStats()
+  return 100, 50, 10
+end
+
+health, armor, ammo = getStats()
+
+-- Extra returns are discarded
+health = getStats()
+
+
+---
+
+Closures (Advanced Functions)
+
+A closure is a function that remembers variables from its creation scope.
+
+function makeCounter()
+  local count = 0
+  return function()
+    count = count + 1
+    return count
+  end
+end
+
+c1 = makeCounter()
+c2 = makeCounter()
+
+print(c1()) -- 1
+print(c1()) -- 2
+print(c2()) -- 1
+
+
+---
+
+Scope (Local vs Global)
+
+x = 10 -- Global variable
+
+local y = 20 -- Local variable
+
+function test()
+  local inside = 5
+end
+-- inside is not accessible here
+
+-- Local variables are faster and safer
+
+
+---
+
+Logical Operators
+
+-- and, or, not
+print(true and false)
+print(true or false)
+print(not true)
+
+
+---
+
+Comparison Operators
+
+print(5 == 5)
+print(5 ~= 3)
+print(5 > 3)
+print(5 <= 10)
+
+
+---
+
+Standard Libraries (Lua 5.1)
+
+math
+
+print(math.abs(-10))
+print(math.floor(3.7))
+print(math.random(1, 10))
+
+string
+
+print(string.upper("lua"))
+print(string.sub("Hello", 1, 4))
+
+table
+
+t = {1, 2, 3}
+table.insert(t, 4)
+table.remove(t, 1)
+
+
+---
+
+Iteration (pairs / ipairs)
+
+pairs – iterates over all keys (unordered)
+
+t = {a = 1, b = 2, [10] = "x"}
+
+for k, v in pairs(t) do
+  print(k, v)
+end
+
+ipairs – iterates array part only (stops at first nil)
+
+arr = {10, 20, 30}
+
+for i, v in ipairs(arr) do
+  print(i, v)
+end
+
+-- ipairs stops on nil
+arr2 = {10, 20, nil, 40}
+
+
+---
+
+Low-Level Iteration with next()
+
+k = nil
+while true do
+  k, v = next(t, k)
+  if not k then break end
+  print(k, v)
+end
+
+
+---
+
+Custom Iterators (Advanced)
+
+function counter(max)
+  local i = 0
+  return function()
+    i = i + 1
+    if i <= max then
+      return i
+    end
+  end
+end
+
+for i in counter(5) do
+  print(i)
+end
+
+
+---
+
+Metatables (Advanced)
+
+Metatables allow operator overloading and behavior customization.
+
+Vector = {}
+Vector.__index = Vector
+
+function Vector.new(x, y)
+  return setmetatable({x = x, y = y}, Vector)
+end
+
+function Vector.__add(a, b)
+  return Vector.new(a.x + b.x, a.y + b.y)
+end
+
+v1 = Vector.new(1, 2)
+v2 = Vector.new(3, 4)
+v3 = v1 + v2
+
+
+---
+
+__index Behavior
+
+-- Table fallback
+meta = { __index = { x = 10 } }
+t = setmetatable({}, meta)
+print(t.x)
+
+-- Function fallback
+meta2 = {
+  __index = function(t, k)
+    return "missing: " .. k
+  end
+}
+t2 = setmetatable({}, meta2)
+print(t2.hello)
+
+
+---
+
+OOP Style in Lua 5.1
+
+Player = {}
+Player.__index = Player
+
+function Player.new(name)
+  local self = setmetatable({}, Player)
+  self.name = name
+  self.health = 100
+  return self
+end
+
+function Player:TakeDamage(dmg)
+  self.health = self.health - dmg
+end
+
+p = Player.new("Alex")
+p:TakeDamage(25)
+
+
+---
+
+Coroutines (Threads)
+
+co = coroutine.create(function()
+  for i = 1, 3 do
+    print(i)
+    coroutine.yield()
+  end
+end)
+
+coroutine.resume(co)
+coroutine.resume(co)
+coroutine.resume(co)
+
+
+---
+
+Error Handling
+
+-- Protected call
+status, err = pcall(function()
+  error("Something went wrong")
+end)
+
+if not status then
+  print(err)
+end
+
+
+---
+
+require / modules
+
+-- mymodule.lua
+local M = {}
+
+function M.sayHello()
+  print("Hello from module")
+end
+
+return M
+
+-- main.lua
+local mymodule = require("mymodule")
+mymodule.sayHello()
+
+
+---
+
+_G (Global Environment)
+
+-- Accessing global variables table
+print(_G.print)
+
+-- Globals live inside _G
+x = 10
+print(_G.x)
+
+
+---
+
+Environment Control (Lua 5.1)
+
+-- Change function environment
+local env = { print = print }
+setfenv(1, env)
+
+print("Allowed")
+-- x = 10 -- error
+
+
+---
+
+Garbage Collection
+
+-- Forcing garbage collection
+collectgarbage("collect")
+
+
+---
+
+Lua 5.1 Reserved Keywords
+
+and  break  do  else  elseif  end
+false  for  function  if  in
+local  nil  not  or  repeat
+return  then  true  until  while
+
+
+---
+
+Common Lua 5.1 Patterns
+
+Default Values
+
+x = x or 10 -- If x is nil or false, assign 10
+
+Shallow Copy Table
+
+copy = {}
+for k, v in pairs(original) do
+  copy[k] = v
+end
+
+Deep Copy Table
+
+function DeepCopy(t, seen)
+  if type(t) ~= "table" then return t end
+  if seen and seen[t] then return seen[t] end
+
+  local nt = {}
+  seen = seen or {}
+  seen[t] = nt
+
+  for k, v in pairs(t) do
+    nt[DeepCopy(k, seen)] = DeepCopy(v, seen)
+  end
+
+  return nt
+end
+
+
+---
+
+Performance Tips
+
+- Prefer local variables
+- Cache globals in hot code
+- Avoid table creation inside loops
+- Avoid ipairs in performance-critical loops
+
+
+---
+
+Now you know everything about Lua 5.1!

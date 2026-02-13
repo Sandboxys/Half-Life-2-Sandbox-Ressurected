@@ -1,0 +1,13 @@
+--- Copyright © 2026, YourLocalCappy, all rights deserved ---
+
+[245.9969] debugoverlay.AddSweptBoxOverlay = function: 0x73f48c2fd0 (function)[245.9970] 
+[245.9971] debugoverlay.ScreenPosition = function: 0x73f48c3150 (function)[245.9972] 
+[245.9973] debugoverlay.AddBoxOverlay2 = function: 0x73f48c2df0 (function)[245.9974] 
+[245.9975] debugoverlay.AddGridOverlay = function: 0x73f48c2e50 (function)[245.9976] 
+[245.9977] debugoverlay.AddLineOverlayAlpha = function: 0x73f48c2f10 (function)[245.9979] 
+[245.9980] debugoverlay.ClearDeadOverlays = function: 0x73f48c30f0 (function)[245.9981] 
+[245.9983] debugoverlay.ClearAllOverlays = function: 0x73f48c3090 (function)[245.9984] 
+[245.9986] debugoverlay.AddTriangleOverlay = function: 0x73f48c3030 (function)[245.9987] 
+[245.9988] debugoverlay.AddBoxOverlay = function: 0x73f48c2d90 (function)[245.9989] 
+[245.9990] debugoverlay.AddLineOverlay = function: 0x73f48c2eb0 (function)[245.9991] 
+[245.9992] debugoverlay.AddScreenTextOverlay = function: 0x73f48c2f70 (function)[245.9993] 
