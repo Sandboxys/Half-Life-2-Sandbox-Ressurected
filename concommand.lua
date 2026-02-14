@@ -5,6 +5,7 @@ local Warning = dbg.Warning
 local tostring = tostring
 local pcall = pcall
 local tonumber = tonumber
+local cvar = require("cvar")
 
 module( "concommand" )
 
@@ -14,6 +15,10 @@ local tFnCommandCallbacks = {}
 function Create( pName, callback, pHelpString, flags )
   tFnCommandCallbacks[ pName ] = callback
   ConCommand( pName, pHelpString, flags )
+end
+
+function Add( pName, callback )
+  Create( pName, callback, nil, 0 )
 end
 
 function Dispatch( pPlayer, pCmd, ArgS )
@@ -35,32 +40,66 @@ function Remove( pName )
   end
 end
 
-function AddToggle(pName, fn)
-  local state = 0
+local FCVAR_CLIENTDLL = _E.FCVAR.CLIENTDLL
 
-  Create(pName, function(pPlayer)
-    state = (state == 0 and 1 or 0)
-    fn(pPlayer, state)
-  end, "None", 0)
+local function ToBool(n)
+  return tonumber(n) == 1 and 1 or 0
 end
 
-function AddVar( pName, vars, default, fn )
-  Create( pName, function( pPlayer, pCmd, ArgS )
-    local v = ArgS and ArgS[1]
+function AddToggle(pName, default, fn, flags)
+  flags = flags or FCVAR_CLIENTDLL
+  default = default or "0"
 
-    if ( v == nil ) then
-      v = default
+  local convar = ConVar(
+    pName,
+    default,
+    flags
+  )
+
+  local function OnChange(varName, oldValueStr, oldValueNum)
+    local newValue = ToBool(convar:GetString())
+    fn(nil, newValue)
+  end
+
+  cvar.AddChangeCallback(
+    pName,
+    "toggle_" .. pName,
+    OnChange
+  )
+
+  return convar
+end
+
+function AddVar(pName, vars, default, fn, flags)
+  flags = flags or FCVAR_CLIENTDLL
+  default = tostring(default or 0)
+
+  local convar = ConVar(
+    pName,
+    default,
+    flags
+  )
+
+  local function OnChange(varName, oldValueStr, oldValueNum)
+    local v = convar:GetString()
+    local n = tonumber(v)
+
+    if n ~= nil then
+      v = n
+    elseif vars and vars[v] ~= nil then
+      v = vars[v]
     else
-      local n = tonumber( v )
-      if ( n ~= nil ) then
-        v = n
-      elseif ( vars and vars[ v ] ~= nil ) then
-        v = vars[ v ]
-      else
-        v = default
-      end
+      v = default
     end
 
-    fn( pPlayer, v, vars )
-  end, "None", 0 )
+    fn(nil, v, vars)
+  end
+
+  cvar.AddChangeCallback(
+    pName,
+    "var_" .. pName,
+    OnChange
+  )
+
+  return convar
 end

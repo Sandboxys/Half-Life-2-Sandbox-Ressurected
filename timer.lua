@@ -1,22 +1,103 @@
---- Copyright © 2026, YourLocalCappy, all rights deserved ---
+-- Copyright © 2026, YourLocalCappy, all rights deserved ---
 
-local timers = {}
-local cooldowns = {}
-local pairs = pairs
+local timers     = {}
+local cooldowns  = {}
+local threads    = {}
+
+local pairs       = pairs
+local tostring    = tostring
+local tableInsert = table.insert
+local tableRemove = table.remove
+
+local error = dbg.Warning
 
 local function now()
-    return os.clock()
+    return os.clock() -- change to CurTime()
+end
+
+local function StartThread(fn)
+    local co = coroutine.create(fn)
+    tableInsert(threads, co)
+    return co
+end
+
+module("timer")
+
+function Thread(fn)
+    return StartThread(fn)
+end
+
+function Wait(seconds)
+    local start = now()
+    while now() - start < seconds do
+        coroutine.yield()
+    end
+end
+
+function Add(name, delay, reps, fn)
+    if not name or not fn then return end
+
+    timers[name] = {
+        delay = delay or 0,
+        reps  = reps or 1,
+        fn    = fn,
+        next  = now() + (delay or 0)
+    }
+end
+
+Create = Add
+
+function Simple(delay, fn)
+    local name = "simple_" .. tostring(fn) .. "_" .. now()
+    Add(name, delay, 1, fn)
+end
+
+function Loop(name, delay, fn)
+    Add(name, delay or 0, 0, fn)
+end
+
+function Remove(name)
+    timers[name] = nil
+end
+
+function Exists(name)
+    return timers[name] ~= nil
+end
+
+function Cooldown(name, delay)
+    cooldowns[name] = now() + delay
+end
+
+function InCooldown(name)
+    return cooldowns[name] and now() < cooldowns[name]
+end
+
+function CheckCooldown(name, delay)
+    if InCooldown(name) then
+        return false
+    end
+
+    Cooldown(name, delay)
+    return true
+end
+
+function RemoveCooldown(name)
+    cooldowns[name] = nil
 end
 
 local function ProcessTimers()
+
     local t = now()
 
+    -- Timers
     for name, tm in pairs(timers) do
+
         if t >= tm.next then
 
             local ok, err = pcall(tm.fn)
+
             if not ok then
-                print("Timer error [" .. name .. "]: " .. err)
+                error("Timer error [" .. name .. "]: " .. err)
                 timers[name] = nil
             else
                 if tm.reps > 0 then
@@ -34,7 +115,21 @@ local function ProcessTimers()
         end
     end
 
-    -- Clean expired cooldowns
+    -- Threads (coroutines)
+    for i = #threads, 1, -1 do
+        local co = threads[i]
+
+        if coroutine.status(co) == "dead" then
+            tableRemove(threads, i)
+        else
+            local ok, err = coroutine.resume(co)
+            if not ok then
+                error("Thread error: " .. err)
+                tableRemove(threads, i)
+            end
+        end
+    end
+
     for name, timeEnd in pairs(cooldowns) do
         if t >= timeEnd then
             cooldowns[name] = nil
@@ -42,70 +137,6 @@ local function ProcessTimers()
     end
 end
 
-local TIMER = {}
-
-function TIMER.Create(name, delay, reps, fn)
+function Think()
     ProcessTimers()
-
-    timers[name] = {
-        delay = delay or 0,
-        reps  = reps or 1,
-        fn    = fn,
-        next  = now() + (delay or 0)
-    }
-end
-
-function TIMER.CreateLoop(name, fn, delay)
-    TIMER.Create(name, delay or 0, 0, fn)
-end
-
-function TIMER.Remove(name)
-    ProcessTimers()
-    timers[name] = nil
-end
-
-function TIMER.Exists(name)
-    ProcessTimers()
-    return timers[name] ~= nil
-end
-
-function TIMER.Stop(name)
-    TIMER.Remove(name)
-end
-
-function TIMER.Cooldown(name, delay)
-    ProcessTimers()
-    cooldowns[name] = now() + delay
-end
-
-function TIMER.InCooldown(name)
-    ProcessTimers()
-    return cooldowns[name] ~= nil
-end
-
-function TIMER.CheckCooldown(name, delay)
-    ProcessTimers()
-
-    if cooldowns[name] then
-        return false
-    end
-
-    cooldowns[name] = now() + delay
-    return true
-end
-
-function TIMER.RemoveCooldown(name)
-    cooldowns[name] = nil
-end
-
-setmetatable(TIMER, {
-    __index = function(t, k)
-        ProcessTimers()
-        return rawget(t, k)
-    end
-})
-
-module("timer")
-for k,v in pairs(TIMER) do
-    _M[k] = v
 end
